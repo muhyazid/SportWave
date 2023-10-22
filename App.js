@@ -16,13 +16,27 @@ import {
 } from 'react-native';
 import {Element3, Receipt21, Clock, Message} from 'iconsax-react-native';
 import {fontType, colors} from './src/theme';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Gantilah dengan ikon yang Anda inginkan
 
 export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>SportWave</Text>
-        <Element3 color={colors.black()} variant="Linear" size={24} />
+        <Icon name="search" size={24} color="black" />
+      </View>
+      {/* Tambahkan pembatas berikut */}
+      <View style={styles.divider} />
+      {/* Tambahkan komponen kotak berwarna putih transparan berikut */}
+      <View style={styles.box}>
+        {/* Tambahkan konten dalam kotak */}
+        <Text style={styles.titleBox}>Top Headlines</Text>
+        <Image
+          source={{
+            uri: 'https://e0.365dm.com/23/10/1600x900/skysports-neymar-injured-brazil_6326292.jpg?20231018214429',
+          }}
+          style={styles.imageBox}
+        />
       </View>
       <View style={styles.listCategory}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -54,14 +68,14 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.darkModeBlack(),
+    backgroundColor: colors.white(), //background warna putih
   },
   header: {
     paddingHorizontal: 24,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    height: 52,
+    height: 60,
     elevation: 8,
     paddingTop: 8,
     paddingBottom: 4,
@@ -69,8 +83,39 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: fontType['Pjs-ExtraBold'],
-    color: colors.white(),
+    color: colors.black(),
   },
+
+  // Gaya untuk pembatas
+  divider: {
+    backgroundColor: colors.grey(0.6), // Ganti dengan warna pembatas yang sesuai
+    height: 1, // Atur tinggi pembatas sesuai keinginan Anda
+  },
+
+  box: {
+    backgroundColor: colors.black(),
+    opacity: 0.15,
+    height: 150,
+    width: '100%',
+    borderRadius: 0,
+  },
+
+  titleBox: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: colors.black,
+  },
+  imageBox: {
+    height: 120,
+    width: 120,
+    borderRadius: 50,
+  },
+
+  icon: {
+    marginHorizontal: 10, // Atur jarak antara ikon
+  },
+
   listCategory: {
     paddingVertical: 10,
   },
@@ -203,7 +248,7 @@ const ListBlog = () => {
               </View>
             </ImageBackground>
           </View>
-          <View style={{...itemHorizontal.cardItem, marginRight: 24}}>
+          <View style={{...itemHorizontal.cardItem, marginRight: 20}}>
             <ImageBackground
               style={itemHorizontal.cardImage}
               resizeMode="cover"
