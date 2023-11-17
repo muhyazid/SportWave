@@ -8,8 +8,8 @@ import {
   ImageBackground,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {colors} from '../src/theme';
-const App = () => {
+import {colors} from '../../src/theme';
+const ProfileScreen = () => {
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle={'light-content'} backgroundColor="#212121" />
@@ -21,7 +21,7 @@ const App = () => {
         resizeMode={'cover'}>
         <View style={{flex: 0.5}}></View>
       </ImageBackground>
-      <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+      <View style={{flex: 1, backgroundColor: colors.darkModeBlack()}}>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Image
             source={{
@@ -44,14 +44,14 @@ const App = () => {
               fontWeight: 'bold',
               fontSize: 18,
               textAlign: 'center',
-              color: '#212121',
+              color: '#ffff',
             }}>
             Muhammad Yazid Abu Sahal
           </Text>
           <Text
             style={{
               textAlign: 'center',
-              color: '#A9A9A9',
+              color: '#fff',
               padding: 15,
               fontStyle: 'italic',
             }}>
@@ -74,11 +74,10 @@ const App = () => {
                   width: 40,
                   height: 40,
                 }}>
-                <Icon name="mobile-alt" size={25} color="#212121" />
+                <Icon name="mobile-alt" size={25} color="#fff" />
               </View>
               <View style={{justifyContent: 'center', marginLeft: 10, flex: 1}}>
-                <Text
-                  style={{fontWeight: 'bold', color: 'black', opacity: 0.6}}>
+                <Text style={{fontWeight: 'bold', color: '#fff', opacity: 0.6}}>
                   +6281-2338-58380
                 </Text>
               </View>
@@ -96,7 +95,7 @@ const App = () => {
                   width: 40,
                   height: 40,
                 }}>
-                <Icon name="map-marker-alt" size={25} color="#212121" />
+                <Icon name="map-marker-alt" size={25} color="#fff" />
               </View>
               <View
                 style={{
@@ -105,8 +104,7 @@ const App = () => {
                   flex: 1,
                   paddingVertical: 10,
                 }}>
-                <Text
-                  style={{fontWeight: 'bold', color: 'black', opacity: 0.6}}>
+                <Text style={{fontWeight: 'bold', color: '#fff', opacity: 0.6}}>
                   Sidoarjo - Jawa Timur
                 </Text>
               </View>
@@ -124,11 +122,10 @@ const App = () => {
                   width: 40,
                   height: 40,
                 }}>
-                <Icon name="envelope" size={25} color="#212121" />
+                <Icon name="envelope" size={25} color="#fff" />
               </View>
               <View style={{justifyContent: 'center', marginLeft: 10, flex: 1}}>
-                <Text
-                  style={{fontWeight: 'bold', color: 'black', opacity: 0.6}}>
+                <Text style={{fontWeight: 'bold', color: '#fff', opacity: 0.6}}>
                   yazidabusahal@gmail.com
                 </Text>
               </View>
@@ -163,4 +160,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default ProfileScreen;

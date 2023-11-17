@@ -14,6 +14,14 @@ const Header = () => {
   );
 };
 
+const HeaderMatch = () => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.title}>Match</Text>
+    </View>
+  );
+};
+
 const styles = {
   header: {
     paddingHorizontal: 24,

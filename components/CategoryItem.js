@@ -1,10 +1,11 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {TouchableOpacity, Text} from 'react-native';
 import {colors} from '../src/theme';
 
 const CategoryItem = ({title, color, marginRight, isActive}) => {
+  const [selected, setSelected] = useState(1);
   return (
-    <View style={{...styles.item, marginRight: marginRight}}>
+    <TouchableOpacity style={{...styles.item, marginRight: marginRight}}>
       <Text
         style={{
           ...styles.title,
@@ -13,7 +14,7 @@ const CategoryItem = ({title, color, marginRight, isActive}) => {
         }}>
         {title}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

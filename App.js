@@ -1,42 +1,79 @@
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {
-  StyleSheet,
-  Dimensions,
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import Header from './components/Header';
-import ListBlog from './components/ListBlog';
-import {colors} from './src/theme';
+import HomeScreen from './layouts/Home/HomeScreen';
+import MathScreen from './layouts/Match/MatchScreen';
 import ProfileScreen from './layouts/Profile/ProfileScreen';
-import MatchScreen from './layouts/Match/MatchScreen';
-import moment from 'moment';
-import Swiper from 'react-native-swiper';
+import {colors} from './src/theme';
+import {Home3, Activity, User} from 'iconsax-react-native';
 
-// export default function Match() {
-//   return <Match />;
-// }
-// function App() {
-//   return <MatchScreen />;
-// }
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-export function App() {
+export default function App() {
   return (
-    <View style={styles.container}>
-      <Header />
-      <ListBlog />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: colors.darkModeBlack(),
+            paddingBottom: 6,
+            paddingTop: 2,
+            height: 54,
+          },
+          tabBarActiveTintColor: colors.blue(),
+          tabBarInactiveTintColor: 'grey',
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({focused, color, size}) => {
+              return (
+                <Home3
+                  variant={focused ? 'Bold' : 'Linear'}
+                  size={size}
+                  color={color}
+                />
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Match"
+          component={MathScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({focused, color, size}) => {
+              return (
+                <Activity
+                  variant={focused ? 'Bold' : 'Linear'}
+                  size={size}
+                  color={color}
+                />
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({focused, color, size}) => {
+              return (
+                <User
+                  variant={focused ? 'Bold' : 'Linear'}
+                  size={size}
+                  color={color}
+                />
+              );
+            },
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: colors.darkModeBlack(),
-  },
-};
-
-export default App;
