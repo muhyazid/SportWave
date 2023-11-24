@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import HomeScreen from './layouts/Home/HomeScreen';
-import MathScreen from './layouts/Match/MatchScreen';
+import MatchScreen from './layouts/Match/MatchScreen';
 import ProfileScreen from './layouts/Profile/ProfileScreen';
 import {colors} from './src/theme';
 import {Home3, Activity, User} from 'iconsax-react-native';
@@ -43,7 +43,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Match"
-          component={MathScreen}
+          component={MatchScreen}
           options={{
             headerShown: false,
             tabBarIcon: ({focused, color, size}) => {

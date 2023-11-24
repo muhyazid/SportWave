@@ -1,14 +1,15 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {View, Text, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {colors} from '../src/theme';
 
 const Header = () => {
+  const scrollY = useRef(new Animated.Value(0)).current;
   return (
     <View style={styles.header}>
       <Text style={styles.title}>SportWave</Text>
       <View style={styles.searchIconContainer}>
-        <Icon name="search" size={24} color={colors.black()} />
+        <Icon name="search" size={24} color={colors.white()} />
       </View>
     </View>
   );
@@ -32,6 +33,7 @@ const styles = {
     elevation: 8,
     paddingTop: 8,
     paddingBottom: 4,
+    backgroundColor: '#232323',
   },
   title: {
     fontSize: 23,
