@@ -6,10 +6,15 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
+  StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {colors} from '../../src/theme';
+import {Setting2, Edit} from 'iconsax-react-native';
+import {useNavigation} from '@react-navigation/native';
+
 const ProfileScreen = () => {
+  const navigation = useNavigation();
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle={'light-content'} backgroundColor="#212121" />
@@ -156,8 +161,33 @@ const ProfileScreen = () => {
           </View>
         </View>
       </View>
+      <TouchableOpacity
+        style={styles.floatingButton}
+        onPress={() => navigation.navigate('Form')}>
+        <Edit color={colors.white()} variant="Linear" size={20} />
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  floatingButton: {
+    backgroundColor: colors.blue(),
+    padding: 15,
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    borderRadius: 10,
+    shadowColor: colors.blue(),
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+
+    elevation: 8,
+  },
+});
 
 export default ProfileScreen;

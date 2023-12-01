@@ -1,15 +1,26 @@
 import React, {useState, useRef} from 'react';
-import {View, Text, Animated} from 'react-native';
+import {View, Text, TouchableOpacity, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {colors} from '../src/theme';
+import {useNavigation} from '@react-navigation/native';
 
 const Header = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
+
+  const handleSearchPress = () => {
+    navigation.navigate('Search');
+  };
+
   return (
     <View style={styles.header}>
       <Text style={styles.title}>SportWave</Text>
       <View style={styles.searchIconContainer}>
-        <Icon name="search" size={24} color={colors.white()} />
+        <TouchableOpacity
+          onPress={handleSearchPress}
+          style={styles.searchIconContainer}>
+          <Icon name="search" size={24} color={colors.white()} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -39,9 +50,6 @@ const styles = {
     fontSize: 23,
     color: colors.white(),
     fontWeight: 'bold',
-  },
-  searchIconContainer: {
-    // Add styles for the search icon container
   },
 };
 
