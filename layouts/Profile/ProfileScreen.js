@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -7,14 +7,46 @@ import {
   TouchableOpacity,
   ImageBackground,
   StyleSheet,
+  ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {colors} from '../../src/theme';
 import {Setting2, Edit} from 'iconsax-react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import axios from 'axios';
+import {TempContent} from '../../components';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const [blogData, setBlogData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const getDataBlog = async () => {
+    try {
+      const response = await axios.get(
+        'https://656f3e736529ec1c62379cb1.mockapi.io/sportwaveapp/content',
+      );
+      setBlogData(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      getDataBlog();
+      setRefreshing(false);
+    }, 1500);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getDataBlog();
+    }, []),
+  );
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle={'light-content'} backgroundColor="#212121" />
@@ -136,28 +168,14 @@ const ProfileScreen = () => {
               </View>
             </View>
           </View>
-          <View
-            style={{flexDirection: 'row', marginTop: 40, marginHorizontal: 30}}>
-            <TouchableOpacity
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Icon name="facebook" size={25} color="#bdbdbd" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Icon name="instagram" size={25} color="#bdbdbd" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Icon name="github" size={25} color="#bdbdbd" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Icon name="twitter" size={25} color="#bdbdbd" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Icon name="linkedin" size={25} color="#bdbdbd" />
-            </TouchableOpacity>
+          <View style={{paddingVertical: 5}}>
+            {loading ? (
+              <ActivityIndicator size={'large'} color={colors.grey()} />
+            ) : (
+              blogData.map((item, index) => (
+                <TempContent item={item} key={index} />
+              ))
+            )}
           </View>
         </View>
       </View>
@@ -187,6 +205,49 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
 
     elevation: 8,
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: colors.black(0.4),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+const profile = StyleSheet.create({
+  pic: {width: 100, height: 100, borderRadius: 15},
+  name: {
+    color: colors.black(),
+    fontSize: 20,
+  },
+  info: {
+    fontSize: 12,
+
+    color: colors.grey(),
+  },
+  sum: {
+    fontSize: 16,
+
+    color: colors.black(),
+  },
+  tag: {
+    fontSize: 14,
+
+    color: colors.grey(0.5),
+  },
+  buttonEdit: {
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    backgroundColor: colors.grey(0.1),
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 14,
+
+    color: colors.black(),
   },
 });
 

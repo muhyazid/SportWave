@@ -6,9 +6,11 @@ import HomeScreen from '../../layouts/Home/HomeScreen';
 import MatchScreen from '../../layouts/Match/MatchScreen';
 import ProfileScreen from '../../layouts/Profile/ProfileScreen';
 import SearchScreen from '../../layouts/Search/SearchScreen';
+import EditForm from '../../layouts/EditForm/EditForm';
 import {colors} from '../theme';
 import {Home3, Activity, User} from 'iconsax-react-native';
 import {FormContent} from '../../components';
+import BlogDetail from '../../layouts/BlogDetail/BlogDetail';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -96,6 +98,28 @@ const Router = () => {
         component={FormContent}
         options={{
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="BlogDetail"
+        component={BlogDetail}
+        options={{
+          headerShown: false,
+          animationEnabled: true,
+          animationTypeForReplace: 'pop',
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+        }}
+      />
+      <Stack.Screen
+        name="EditForm"
+        component={EditForm}
+        options={{
+          headerShown: false,
+          animationEnabled: true,
+          animationTypeForReplace: 'pop',
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
         }}
       />
     </Stack.Navigator>

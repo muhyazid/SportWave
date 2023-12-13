@@ -6,13 +6,16 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {ArrowLeft} from 'iconsax-react-native';
 import {useNavigation} from '@react-navigation/native';
-import {fontType, colors} from '../src/theme';
+import {fontType, colors} from '../../src/theme';
 import {DocumentUpload} from 'iconsax-react-native';
+import axios from 'axios';
 
 const FormContent = () => {
+  const [loading, setLoading] = useState(false);
   const dataCategory = [
     {id: 1, catename: 'Football'},
     {id: 2, catename: 'Volleyball'},
@@ -23,10 +26,38 @@ const FormContent = () => {
   ];
 
   const [blogData, setBlogData] = useState({
+    image: '',
     title: '',
     description: '',
     category: {},
   });
+
+  const handleUpload = async () => {
+    setLoading(true);
+    try {
+      await axios
+        .post(
+          'https://656f3e736529ec1c62379cb1.mockapi.io/sportwaveapp/content/',
+          {
+            image,
+            title: blogData.title,
+            category: blogData.category,
+            description: blogData.description,
+            createdAt: new Date(),
+          },
+        )
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      setLoading(false);
+      navigation.navigate('Profile');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleChange = (key, value) => {
     setBlogData({
@@ -122,9 +153,14 @@ const FormContent = () => {
           </View>
         </View>
       </ScrollView>
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.blue()} />
+        </View>
+      )}
 
       <View style={styles.bottomBar}>
-        <TouchableOpacity style={styles.uploadButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
           <Text style={styles.buttonLabel}>Upload</Text>
         </TouchableOpacity>
       </View>
@@ -233,5 +269,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
 
     color: colors.white(),
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: colors.black(0.4),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
