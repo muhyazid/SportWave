@@ -23,7 +23,8 @@ import {formatNumber} from '../../src/utils/formatNumber';
 import {formatDate} from '../../src/utils/formatDate';
 import FormContent from '../FormContent/FormContent';
 import EditBlogForm from '../EditForm/EditForm';
-import axios from 'axios';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import ActionSheet from 'react-native-actions-sheet';
 
 const BlogDetail = ({route}) => {
@@ -31,53 +32,57 @@ const BlogDetail = ({route}) => {
   const [iconStates, setIconStates] = useState({});
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const navigation = useNavigation();
-
   const actionSheetRef = useRef(null);
-
   const openActionSheet = () => {
     actionSheetRef.current?.show();
   };
-
   const closeActionSheet = () => {
     actionSheetRef.current?.hide();
   };
-
   useEffect(() => {
-    getBlogById();
+    const subscriber = firestore()
+      .collection('blog')
+      .doc(blogId)
+      .onSnapshot(documentSnapshot => {
+        const blogData = documentSnapshot.data();
+        if (blogData) {
+          console.log('Blog data: ', blogData);
+          setSelectedBlog(blogData);
+        } else {
+          console.log(`Blog with ID ${blogId} not found.`);
+        }
+      });
+    setLoading(false);
+    return () => subscriber();
   }, [blogId]);
-
-  const getBlogById = async () => {
-    try {
-      const response = await axios.get(
-        `https://656f3e736529ec1c62379cb1.mockapi.io/sportwaveapp/content/${blogId}`,
-      );
-      setSelectedBlog(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const navigateEdit = () => {
     closeActionSheet();
     navigation.navigate('EditForm', {blogId});
   };
   const handleDelete = async () => {
-    await axios
-      .delete(
-        `https://656f3e736529ec1c62379cb1.mockapi.io/sportwaveapp/content/${blogId}`,
-      )
-      .then(() => {
-        closeActionSheet();
-        navigation.navigate('Profile');
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    setLoading(true);
+    try {
+      await firestore()
+        .collection('blog')
+        .doc(blogId)
+        .delete()
+        .then(() => {
+          console.log('Blog deleted!');
+        });
+      if (selectedBlog?.image) {
+        const imageRef = storage().refFromURL(selectedBlog?.image);
+        await imageRef.delete();
+      }
+      console.log('Blog deleted!');
+      closeActionSheet();
+      setSelectedBlog(null);
+      setLoading(false);
+      navigation.navigate('Profile');
+    } catch (error) {
+      console.error(error);
+    }
   };
-
   const scrollY = useRef(new Animated.Value(0)).current;
   const diffClampY = Animated.diffClamp(scrollY, 0, 52);
   const headerY = diffClampY.interpolate({
@@ -273,7 +278,7 @@ const styles = StyleSheet.create({
     color: colors.grey(0.9),
     fontSize: 10,
   },
-  title: {
+  description: {
     fontSize: 16,
     color: colors.white(),
     marginTop: 10,

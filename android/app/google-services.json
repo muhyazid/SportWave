@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514331111152",
+    "project_id": "sportwave-ee192",
+    "storage_bucket": "sportwave-ee192.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514331111152:android:8a1a221a24826d72621c35",
+        "android_client_info": {
+          "package_name": "com.sportwave"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDvQFaJz9GalhU5o133DadpA4fB2i6Rhs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
