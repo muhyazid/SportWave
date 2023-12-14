@@ -8,6 +8,9 @@ import VerticalBlog from './VerticalBlog';
 import FormContent from '../layouts/FormContent/FormContent';
 import TempContent from './TempContent';
 import EditForm from '../layouts/EditForm/EditForm';
+import Login from '../layouts/Login/login';
+import Register from '../layouts/Register/register';
+
 export {
   BlogCard,
   CategoryItem,
@@ -19,4 +22,6 @@ export {
   FormContent,
   TempContent,
   EditForm,
+  Login,
+  Register,
 };

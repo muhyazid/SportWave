@@ -5,8 +5,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../../layouts/Home/HomeScreen';
 import MatchScreen from '../../layouts/Match/MatchScreen';
 import ProfileScreen from '../../layouts/Profile/ProfileScreen';
-import SearchScreen from '../../layouts/Search/SearchScreen';
 import EditForm from '../../layouts/EditForm/EditForm';
+import Login from '../../layouts/Login/login';
+import Register from '../../layouts/Register/register';
 import {colors} from '../theme';
 import {Home3, Activity, User} from 'iconsax-react-native';
 import {FormContent} from '../../components';
@@ -82,17 +83,13 @@ const MainTabNavigator = () => {
 
 const Router = () => {
   return (
-    <Stack.Navigator initialRouteName="MainTabNavigator">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="MainTabNavigator"
         component={MainTabNavigator}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{headerShown: false}}
-      />
+
       <Stack.Screen
         name="Form"
         component={FormContent}
@@ -121,6 +118,17 @@ const Router = () => {
           gestureEnabled: true,
           gestureDirection: 'horizontal',
         }}
+      />
+
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
